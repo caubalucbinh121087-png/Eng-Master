@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lab: Simple File Upload</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="container">
+<h1>Lab: Simple File Upload</h1>
+<p class="lead">Mẫu web tĩnh để demo chức năng chọn file (client-side). Không có server upload — dùng để học, test & deploy lên GitHub Pages.</p>
+
+
+<section class="card">
+<label class="file-drop" id="dropzone">
+<input id="fileInput" type="file" multiple />
+<div>
+<strong>Kéo thả file ở đây</strong>
+<div>hoặc nhấn để chọn file</div>
+</div>
+</label>
+
+
+<div id="preview" class="preview">
+<p>Không có file nào.</p>
+</div>
+
+
+<div class="actions">
+<button id="clearBtn">Clear</button>
+</div>
+</section>
+
+
+<footer class="foot">Hướng dẫn: push cả thư mục này lên GitHub & bật GitHub Pages để xem demo.</footer>
+</main>
+
+
+<script src="app.js"></script>
+</body>
+</html>
