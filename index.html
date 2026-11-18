@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
   <div class="app-shell">
@@ -59,7 +59,7 @@
             <div class="exercise-top"><div><span class="eyebrow">LISTENING PRACTICE</span><h3>Listen and type what you hear</h3><p>Nghe câu tiếng Anh, sau đó gõ lại chính xác nhất có thể.</p></div><div class="headphone-icon">🎧</div></div>
             <div class="translation-prompt">
               <div class="translation-heading"><span>🇻🇳</span><div><strong>Dịch sang tiếng Anh</strong><small>Đọc nghĩa tiếng Việt, nghe audio và gõ lại câu tiếng Anh</small></div></div>
-              <p id="translationText">Tối qua tôi đã xem TV.</p>
+              <p id="translationText" aria-live="polite">Tối qua tôi đã xem TV.</p>
             </div>
             <div class="audio-box">
               <div class="audio-main">
@@ -88,6 +88,6 @@
     </main>
   </div>
   <div class="toast" id="toast" role="status"></div>
-  <script src="app.js"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>

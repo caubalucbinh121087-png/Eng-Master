@@ -62,7 +62,9 @@ function speak(text,rate=speed){
 }
 function render(){
  const lesson=lessons[current];
- $("translationText").textContent=lesson.vi;
+ // Refresh every question-specific field together whenever the learner changes question.
+ const translationNode=$("translationText");
+ if(translationNode) translationNode.textContent=lesson.vi || "Hãy nghe câu tiếng Anh và dịch lại.";
  $("audioTitle").textContent=`Sentence ${String(current+1).padStart(2,"0")}`;
  $("audioStatus").textContent="American English · Ready to play";
  $("questionCounter").textContent=`Question ${current+1} of ${lessons.length}`;
