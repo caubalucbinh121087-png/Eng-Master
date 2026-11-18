@@ -1,26 +1,42 @@
-# English Master – Past Simple Listening & Dictation
+# English Master – Full Course (GitHub Pages)
 
-A static web app that can be hosted directly on GitHub Pages.
+A static English-learning web app. No build tools or backend are required.
 
-## Features
-- 10 Past Simple listening/dictation questions
-- Text-to-speech playback with English voice selection
-- Playback speed: 1.0x, 0.8x, 0.65x
-- Word-level comparison: correct, wrong, missing and extra words
-- Grammar explanations and hints
-- Progress, accuracy, listening count and points saved in browser LocalStorage
-- Responsive layout for desktop and mobile
+## Included learning content
 
-## Run locally
-Open `index.html` in Edge or Chrome. For best results, use GitHub Pages or a local web server.
+### Grammar: all 12 English tenses
+Each tense contains:
+- Vietnamese explanation and key structure
+- Common time expressions
+- 5 bilingual listening/dictation prompts
+- English audio playback using browser Speech Synthesis
+- Word-by-word answer comparison and grammar feedback
 
-## Publish on GitHub Pages
-1. Create a new GitHub repository, e.g. `english-master`.
-2. Upload `index.html`, `style.css`, `app.js`, and `README.md` to the repository root.
-3. Open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select branch **main** and folder **/(root)**, then Save.
-6. Wait for GitHub Pages to publish. Your app URL will look like `https://YOUR-USERNAME.github.io/english-master/`.
+### Daily English conversation: 30 topics
+Topics include greetings, introductions, daily routines, family, ordering food, restaurants, shopping, directions, transport, hotels, airports, travel, weather, hobbies, weekend plans, phone calls, small talk, opinions, agreeing/disagreeing, apologies, meetings, presentations, work email, office communication, IT support, networking, problem solving, scheduling, health, and emergencies.
+
+Each topic includes bilingual listening/dictation practice.
+
+## App features
+- Vietnamese prompt shown before the learner listens and types in English
+- English voice selection and playback speed controls
+- Hints, answer checking, missing/wrong/extra word highlighting
+- Grammar explanations
+- Course and lesson navigation
+- Progress dashboard, points and accuracy
+- Progress stored in browser LocalStorage
+- Responsive desktop and mobile layout
+
+## Publish to GitHub Pages
+1. Download and extract this ZIP.
+2. Open your existing GitHub repository.
+3. Upload and overwrite `index.html`, `style.css`, `app.js`, and `README.md` in the repository root.
+4. Commit the changes to the `main` branch.
+5. Ensure **Settings → Pages → Deploy from a branch → main → /(root)** is selected.
+6. Open your GitHub Pages URL and press **Ctrl + F5** to refresh cached files.
 
 ## Audio note
-This first version uses the browser's built-in SpeechSynthesis voice engine, not bundled MP3 files. It includes an English voice selector and a Test audio button. Available voices depend on the operating system and browser. If Edge reports voices but produces no sound, check Windows output device/volume and try another installed English voice. The dictation, checking and progress features work independently of audio.
+This version uses the browser/operating system's available English Speech Synthesis voices. Available voices and audio quality depend on the user's device and browser. It does not bundle professionally recorded MP3 files.
+
+## Progress and storage
+Progress is saved in LocalStorage in the current browser profile. It does not automatically sync across devices or browsers. Clearing browser site data can remove saved progress.
