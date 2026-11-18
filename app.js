@@ -1,14 +1,14 @@
 const lessons = [
- {text:"I watched TV last night.",hint:"The verb is regular. It ends in -ed.",explain:"Watch là động từ có quy tắc: watch → watched. Dùng Past Simple vì hành động xảy ra last night."},
- {text:"She visited her parents yesterday.",hint:"Look for a regular verb ending in -ed.",explain:"Visit → visited. Với động từ tận cùng bằng phụ âm + y hoặc các trường hợp thông thường, thêm -ed."},
- {text:"We went to Hue last weekend.",hint:"Go is an irregular verb. Its past form starts with W.",explain:"Go → went là động từ bất quy tắc. Không dùng goed. Last weekend cho biết thời điểm trong quá khứ."},
- {text:"He didn't go to work yesterday.",hint:"After didn't, use the base form of the verb.",explain:"Câu phủ định Past Simple: S + didn't + V nguyên mẫu. Vì vậy dùng didn't go, không dùng didn't went."},
- {text:"Did you watch the movie?",hint:"A Past Simple question starts with Did.",explain:"Câu hỏi Past Simple: Did + S + V nguyên mẫu? Không dùng Did you watched."},
- {text:"I bought a new laptop last week.",hint:"Buy is irregular. The past form rhymes with 'caught'.",explain:"Buy → bought là động từ bất quy tắc. Last week là dấu hiệu thường gặp của Past Simple."},
- {text:"They were at the party last night.",hint:"The past form of 'are' is used with they.",explain:"To be ở quá khứ: am/is → was; are → were. Với chủ ngữ they, dùng were."},
- {text:"Where did you go yesterday?",hint:"The question word comes before did.",explain:"Cấu trúc: Wh-word + did + S + V nguyên mẫu? Go giữ nguyên sau did."},
- {text:"I didn't know about the meeting.",hint:"Know is irregular. In this sentence it follows didn't.",explain:"Know → knew ở câu khẳng định. Nhưng sau didn't phải dùng nguyên mẫu: didn't know."},
- {text:"We had a great time during our trip.",hint:"Have is irregular. Its past form is a short word.",explain:"Have → had là động từ bất quy tắc. Cụm have a great time nghĩa là có khoảng thời gian vui vẻ."}
+ {text:"I watched TV last night.",vi:"Tối qua tôi đã xem TV.",hint:"The verb is regular. It ends in -ed.",explain:"Watch là động từ có quy tắc: watch → watched. Dùng Past Simple vì hành động xảy ra last night."},
+ {text:"She visited her parents yesterday.",vi:"Hôm qua cô ấy đã đến thăm bố mẹ.",hint:"Look for a regular verb ending in -ed.",explain:"Visit → visited. Với động từ tận cùng bằng phụ âm + y hoặc các trường hợp thông thường, thêm -ed."},
+ {text:"We went to Hue last weekend.",vi:"Cuối tuần trước chúng tôi đã đến Huế.",hint:"Go is an irregular verb. Its past form starts with W.",explain:"Go → went là động từ bất quy tắc. Không dùng goed. Last weekend cho biết thời điểm trong quá khứ."},
+ {text:"He didn't go to work yesterday.",vi:"Hôm qua anh ấy đã không đi làm.",hint:"After didn't, use the base form of the verb.",explain:"Câu phủ định Past Simple: S + didn't + V nguyên mẫu. Vì vậy dùng didn't go, không dùng didn't went."},
+ {text:"Did you watch the movie?",vi:"Bạn đã xem bộ phim đó chưa?",hint:"A Past Simple question starts with Did.",explain:"Câu hỏi Past Simple: Did + S + V nguyên mẫu? Không dùng Did you watched."},
+ {text:"I bought a new laptop last week.",vi:"Tuần trước tôi đã mua một chiếc máy tính xách tay mới.",hint:"Buy is irregular. The past form rhymes with 'caught'.",explain:"Buy → bought là động từ bất quy tắc. Last week là dấu hiệu thường gặp của Past Simple."},
+ {text:"They were at the party last night.",vi:"Tối qua họ đã ở bữa tiệc.",hint:"The past form of 'are' is used with they.",explain:"To be ở quá khứ: am/is → was; are → were. Với chủ ngữ they, dùng were."},
+ {text:"Where did you go yesterday?",vi:"Hôm qua bạn đã đi đâu?",hint:"The question word comes before did.",explain:"Cấu trúc: Wh-word + did + S + V nguyên mẫu? Go giữ nguyên sau did."},
+ {text:"I didn't know about the meeting.",vi:"Tôi đã không biết về cuộc họp.",hint:"Know is irregular. In this sentence it follows didn't.",explain:"Know → knew ở câu khẳng định. Nhưng sau didn't phải dùng nguyên mẫu: didn't know."},
+ {text:"We had a great time during our trip.",vi:"Chúng tôi đã có khoảng thời gian tuyệt vời trong chuyến đi.",hint:"Have is irregular. Its past form is a short word.",explain:"Have → had là động từ bất quy tắc. Cụm have a great time nghĩa là có khoảng thời gian vui vẻ."}
 ];
 
 const $ = id => document.getElementById(id);
@@ -62,6 +62,7 @@ function speak(text,rate=speed){
 }
 function render(){
  const lesson=lessons[current];
+ $("translationText").textContent=lesson.vi;
  $("audioTitle").textContent=`Sentence ${String(current+1).padStart(2,"0")}`;
  $("audioStatus").textContent="American English · Ready to play";
  $("questionCounter").textContent=`Question ${current+1} of ${lessons.length}`;
