@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>English Master | Past Simple Listening</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">E</div>
+        <div><strong>English Master</strong><small>LEARN · LISTEN · SPEAK</small></div>
+      </div>
+      <nav class="nav">
+        <a class="nav-item active" href="#home"><span>⌂</span> Trang chủ</a>
+        <a class="nav-item" href="#course"><span>▤</span> Khóa học</a>
+        <a class="nav-item" href="#listening"><span>♫</span> Luyện nghe</a>
+        <a class="nav-item" href="#progress"><span>▥</span> Tiến độ</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="daily-card"><span class="tiny-label">MỤC TIÊU HÔM NAY</span><strong>15 phút</strong><p>Học một chút mỗi ngày để tiến bộ.</p></div>
+        <div class="profile"><div class="avatar">👨‍🎓</div><div><strong>English Learner</strong><small>Personal learning</small></div></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-menu" id="menuBtn" aria-label="Mở menu">☰</button>
+        <div><span class="eyebrow">MY LEARNING SPACE</span><h1>Xin chào! Sẵn sàng học hôm nay?</h1></div>
+        <div class="top-actions"><span class="streak">🔥 <b id="streak">1</b> day streak</span><div class="top-avatar">👨‍🎓</div></div>
+      </header>
+
+      <section class="welcome-grid" id="home">
+        <div class="welcome-card">
+          <div class="welcome-copy"><span class="eyebrow light">YOUR ENGLISH JOURNEY</span><h2>Small steps.<br><em>Big progress.</em></h2><p>Luyện nghe, ghi nhớ cấu trúc và tự tin sử dụng tiếng Anh mỗi ngày.</p><a class="white-link" href="#listening">Tiếp tục học <span>→</span></a></div>
+          <div class="hero-art" aria-hidden="true"><div class="sound-orbit orbit-one"></div><div class="sound-orbit orbit-two"></div><div class="headphone">♫</div><div class="hero-spark">✦</div></div>
+        </div>
+        <div class="summary-card"><span class="summary-icon">🏆</span><span class="tiny-label">ĐIỂM TÍCH LŨY</span><strong id="totalPoints">0</strong><small>Keep going — you're doing great!</small><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      </section>
+
+      <section class="stats-grid" id="progress">
+        <div class="stat-card"><span class="stat-icon blue">✓</span><div><small>Đã hoàn thành</small><strong><span id="completedCount">0</span><small class="unit"> / 10 câu</small></strong></div></div>
+        <div class="stat-card"><span class="stat-icon green">◎</span><div><small>Độ chính xác</small><strong id="accuracy">—</strong></div></div>
+        <div class="stat-card"><span class="stat-icon orange">♫</span><div><small>Lượt nghe</small><strong id="listenCount">0</strong></div></div>
+      </section>
+
+      <section class="learning-layout" id="listening">
+        <div class="lesson-panel">
+          <div class="section-heading"><div><span class="eyebrow">GRAMMAR COURSE · A2</span><h2>Past Simple – Thì quá khứ đơn</h2><p>Listening & Dictation · Bài luyện nghe và gõ lại</p></div><span class="level-pill">BEGINNER</span></div>
+          <div class="lesson-progress"><div class="progress-meta"><span id="questionCounter">Question 1 of 10</span><span id="progressPercent">0% completed</span></div><div class="progress-track"><div id="progressFill"></div></div></div>
+
+          <div class="exercise-card">
+            <div class="exercise-top"><div><span class="eyebrow">LISTENING PRACTICE</span><h3>Listen and type what you hear</h3><p>Nghe câu tiếng Anh, sau đó gõ lại chính xác nhất có thể.</p></div><div class="headphone-icon">🎧</div></div>
+            <div class="audio-box">
+              <div class="audio-main">
+                <button class="play-btn" id="playBtn" aria-label="Phát audio">▶</button>
+                <div class="audio-info"><strong id="audioTitle">Sentence 01</strong><span id="audioStatus">American English · Ready to play</span></div>
+                <div class="audio-wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="audio-controls"><div class="speed-group"><span>Speed</span><button class="speed active" data-speed="1">1.0x</button><button class="speed" data-speed="0.8">0.8x</button><button class="speed" data-speed="0.65">0.65x</button></div><button class="replay-btn" id="replayBtn">↻ Nghe lại</button></div>
+            </div>
+            <div class="voice-row"><label for="voiceSelect">Giọng đọc</label><select id="voiceSelect"><option value="">Tự động chọn English voice</option></select><button class="test-audio" id="testAudio">Test audio</button></div>
+            <div class="answer-area"><div class="answer-label"><label for="answerInput">YOUR ANSWER <span>Gõ câu bạn vừa nghe</span></label><span class="keyboard-hint">Ctrl + Enter để kiểm tra</span></div><textarea id="answerInput" rows="3" placeholder="Type the sentence you hear here..." autocomplete="off" spellcheck="false"></textarea><div class="answer-tools"><button class="hint-btn" id="hintBtn">💡 Gợi ý</button><span id="charCount">0 characters</span></div><div class="hint-box hidden" id="hintBox"></div></div>
+            <div class="feedback hidden" id="feedback" aria-live="polite"></div>
+            <div class="action-row"><button class="primary-btn" id="checkBtn">Kiểm tra đáp án <span>→</span></button><button class="secondary-btn" id="showAnswerBtn">Xem đáp án</button></div>
+            <div class="after-check hidden" id="afterCheck"><button class="secondary-btn" id="retryBtn">↻ Làm lại câu này</button><button class="primary-btn" id="nextBtn">Câu tiếp theo <span>→</span></button></div>
+          </div>
+          <div class="lesson-note"><span>💡</span><div><strong>Learning tip</strong><p>Hãy nghe cả câu trước khi gõ. Chú ý các động từ bất quy tắc như <b>go → went</b>, <b>buy → bought</b>, <b>have → had</b>.</p></div></div>
+        </div>
+
+        <aside class="right-panel">
+          <div class="side-card"><div class="side-card-title"><h3>Question list</h3><span id="sideDone">0/10</span></div><div class="question-list" id="questionList"></div><div class="legend"><span><i class="legend-dot done"></i> Đã làm</span><span><i class="legend-dot current"></i> Hiện tại</span><span><i class="legend-dot"></i> Chưa làm</span></div></div>
+          <div class="side-card grammar-card"><span class="grammar-icon">📘</span><h3>Grammar reminder</h3><p>Past Simple dùng để diễn tả hành động đã xảy ra và kết thúc trong quá khứ.</p><div class="formula"><small>FORMULA</small><strong>S + V2 / V-ed</strong></div><ul><li>yesterday</li><li>last week / last night</li><li>two days ago</li><li>in 2020</li></ul></div>
+          <div class="side-card progress-card"><h3>Your progress</h3><div class="circle-progress" id="circleProgress"><div><strong id="circleValue">0%</strong><small>completed</small></div></div><p id="progressMessage">Bắt đầu câu đầu tiên để ghi nhận tiến độ nhé!</p></div>
+        </aside>
+      </section>
+      <footer>© 2026 English Master · Built for daily learning <span>Made with 💙</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
