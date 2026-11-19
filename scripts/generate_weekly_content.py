@@ -19,9 +19,9 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE_DATA = ROOT / "course-data.js"
 ARCHIVE = ROOT / "content" / "weekly-lessons.json"
 OUTPUT_JS = ROOT / "weekly-content.js"
-API_URL = "https://api.openai.com/v1/responses"
-MODEL = os.getenv("OPENAI_MODEL", "gpt-6.2-astra")
-API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
+API_URL_TEMPLATE = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
+API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 SOURCE_REFERENCES = [
     {"name": "British Council LearnEnglish", "url": "https://learnenglish.britishcouncil.org/"},
     {"name": "VOA Learning English", "url": "https://learningenglish.voanews.com/"},
@@ -64,16 +64,40 @@ def normalize(text: str) -> str:
 def sha(text: str) -> str:
     return hashlib.sha256(normalize(text).encode("utf-8")).hexdigest()
 
-def api_call(payload: dict) -> dict:
+def gemini_schema(schema: dict) -> dict:
+    """Convert the small JSON Schema subset used here to Gemini Schema format."""
+    converted = {}
+    for key, value in schema.items():
+        if key == "type":
+            converted[key] = value.upper() if isinstance(value, str) else value
+        elif key == "properties":
+            converted[key] = {name: gemini_schema(spec) for name, spec in value.items()}
+        elif key == "items":
+            converted[key] = gemini_schema(value)
+        elif key in ("required", "enum", "description", "format", "nullable"):
+            converted[key] = value
+        # Gemini's Schema format does not need JSON Schema's additionalProperties flag.
+    return converted
+
+def api_call(contents: str, schema: dict, max_output_tokens: int = 12000) -> dict:
     if not API_KEY:
-        raise RuntimeError("Missing OPENAI_API_KEY. Add it in GitHub repository Settings → Secrets and variables → Actions.")
+        raise RuntimeError("Missing GEMINI_API_KEY. Add it in GitHub repository Settings → Secrets and variables → Actions.")
+    payload = {
+        "contents": [{"role": "user", "parts": [{"text": contents}]}],
+        "generationConfig": {
+            "temperature": 0.7,
+            "responseMimeType": "application/json",
+            "responseSchema": gemini_schema(schema),
+            "maxOutputTokens": max_output_tokens,
+        },
+    }
     req = urllib.request.Request(
-        API_URL,
+        API_URL_TEMPLATE.format(model=MODEL),
         data=json.dumps(payload).encode("utf-8"),
         headers={
-            "Authorization": f"Bearer {API_KEY}",
+            "x-goog-api-key": API_KEY,
             "Content-Type": "application/json",
-            "User-Agent": "EnglishMaster-WeeklyContent/1.0",
+            "User-Agent": "EnglishMaster-WeeklyContent/2.0",
         },
         method="POST",
     )
@@ -81,23 +105,25 @@ def api_call(payload: dict) -> dict:
         with urllib.request.urlopen(req, timeout=240) as response:
             return json.loads(response.read().decode("utf-8"))
     except urllib.error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace")[:1500]
-        raise RuntimeError(f"OpenAI API returned HTTP {exc.code}: {detail}") from exc
+        detail = exc.read().decode("utf-8", errors="replace")[:1800]
+        if exc.code == 429:
+            raise RuntimeError(f"Gemini API returned HTTP 429 (rate/quota limit). Check Google AI Studio limits for {MODEL}: {detail}") from exc
+        raise RuntimeError(f"Gemini API returned HTTP {exc.code}: {detail}") from exc
     except urllib.error.URLError as exc:
-        raise RuntimeError(f"Could not connect to OpenAI API: {exc}") from exc
+        raise RuntimeError(f"Could not connect to Gemini API: {exc}") from exc
 
 def output_text(response: dict) -> str:
-    if isinstance(response.get("output_text"), str):
-        return response["output_text"]
-    chunks = []
-    for item in response.get("output", []):
-        if item.get("type") == "message":
-            for part in item.get("content", []):
-                if part.get("type") in ("output_text", "text") and isinstance(part.get("text"), str):
-                    chunks.append(part["text"])
-    if not chunks:
-        raise RuntimeError("The model response did not contain structured text output.")
-    return "\n".join(chunks)
+    candidates = response.get("candidates", [])
+    for candidate in candidates:
+        parts = candidate.get("content", {}).get("parts", [])
+        chunks = [part.get("text", "") for part in parts if isinstance(part.get("text"), str)]
+        if chunks:
+            return "\n".join(chunks)
+    prompt_feedback = response.get("promptFeedback", {})
+    block_reason = prompt_feedback.get("blockReason")
+    if block_reason:
+        raise RuntimeError(f"Gemini blocked the prompt: {block_reason}")
+    raise RuntimeError("Gemini response did not contain generated text. Check model availability and API quota.")
 
 def parse_base_sentences() -> list[str]:
     raw = BASE_DATA.read_text(encoding="utf-8")
@@ -136,12 +162,12 @@ def prompt_for_generation(week_id: str, duplicate_examples: list[str]) -> str:
     return f"""
 Create exactly 50 ORIGINAL English-learning dictation prompts for English Master, publication batch {week_id}.
 
-RESEARCH FIRST: use your web search tool to consult the public learning frameworks and topic/activity categories on:
+CURRICULUM INSPIRATION: use general CEFR-aligned learning principles and common topic/activity categories associated with these public learning resources:
 - British Council LearnEnglish: https://learnenglish.britishcouncil.org/
 - VOA Learning English: https://learningenglish.voanews.com/
 - Cambridge English learner activities: https://www.cambridgeenglish.org/learning-english/activities-for-learners/
 
-Use these sources for curriculum inspiration, practical situations, and CEFR-appropriate learning progression only. Do NOT copy sentences, dialogues, exercises, explanations, or audio scripts from those sites. Write original sentences from scratch.
+This workflow does not perform live web browsing. Use the named resources only as broad curriculum references; do NOT claim to have visited them during this run. Do NOT copy sentences, dialogues, exercises, explanations, or audio scripts. Write original sentences from scratch.
 
 OUTPUT DISTRIBUTION (exact):
 - 25 items with track="daily" (everyday spoken English)
@@ -263,25 +289,22 @@ def make_modules(items: list, week_id: str) -> list[dict]:
 
 def review_batch(items: list) -> None:
     compact = [{"track": x["track"], "level": x["level"], "topic": x["topic"], "en": x["en"], "vi": x["vi"], "explain": x["explain"]} for x in items]
-    schema = REVIEW_SCHEMA
-    payload = {
-        "model": MODEL,
-        "store": False,
-        "input": [
-            {"role": "system", "content": "You are a strict English-language teaching editor. Review bilingual learning prompts. Approve only if the English is natural and grammatical, Vietnamese accurately conveys the meaning, CEFR labels are plausible, explanations are useful, content is original, and there is no harmful or sensitive content. Be conservative. Return only the required JSON."},
-            {"role": "user", "content": "Review all 50 items as one batch. If any material language, translation, level, repetition, or teaching-quality issue exists, set approved=false and list concise issues. Data:\n" + json.dumps(compact, ensure_ascii=False)},
-        ],
-        "text": {"format": {"type": "json_schema", "name": "weekly_content_review", "strict": True, "schema": schema}},
-        "max_output_tokens": 2500,
-    }
-    response = api_call(payload)
+    prompt = (
+        "You are a strict English-language teaching editor. Review all 50 bilingual learning prompts. "
+        "Approve only if English is natural and grammatical, Vietnamese accurately conveys the meaning, "
+        "CEFR labels are plausible, explanations are useful, items are varied and suitable, and no harmful "
+        "or sensitive content appears. Be conservative. Return JSON with approved (boolean) and issues (array of strings).\n"
+        "If any material language, translation, level, repetition, or teaching-quality issue exists, set approved=false.\n"
+        "DATA:\n" + json.dumps(compact, ensure_ascii=False)
+    )
+    response = api_call(prompt, REVIEW_SCHEMA, max_output_tokens=2500)
     review = json.loads(output_text(response))
     if not review.get("approved"):
         raise RuntimeError("Independent content review did not approve this batch: " + "; ".join(review.get("issues", [])[:12]))
 
 def main() -> int:
     if not API_KEY:
-        raise RuntimeError("OPENAI_API_KEY is not configured.")
+        raise RuntimeError("GEMINI_API_KEY is not configured.")
     now = dt.datetime.now(dt.timezone.utc)
     iso = now.isocalendar()
     week_id = f"{iso.year}-W{iso.week:02d}"
@@ -299,18 +322,11 @@ def main() -> int:
         prompt = prompt_for_generation(week_id, duplicate_examples)
         if last_issues:
             prompt += "\n\nREGENERATION REQUIRED. Fix these validation issues and regenerate a fresh complete batch:\n" + "\n".join(last_issues[:30])
-        payload = {
-            "model": MODEL,
-            "store": False,
-            "tools": [{"type": "web_search"}],
-            "input": [
-                {"role": "system", "content": "You create original, accurate, bilingual English-learning content. Research public educational guidance with web search, but never copy source material. Follow the exact JSON schema and count."},
-                {"role": "user", "content": prompt},
-            ],
-            "text": {"format": {"type": "json_schema", "name": "weekly_english_content", "strict": True, "schema": GEN_SCHEMA}},
-            "max_output_tokens": 12000,
-        }
-        response = api_call(payload)
+        generation_prompt = (
+            "You create original, accurate, bilingual English-learning content. Follow the exact JSON schema and counts. "
+            "Use CEFR-aligned language guidance. Do not claim live web research.\n\n" + prompt
+        )
+        response = api_call(generation_prompt, GEN_SCHEMA, max_output_tokens=12000)
         generated = json.loads(output_text(response))
         candidate = generated.get("items", [])
         last_issues = validate_items(candidate, existing)
@@ -330,7 +346,7 @@ def main() -> int:
         "model": MODEL,
         "count": len(items),
         "quality_review": "approved",
-        "research_method": "OpenAI Responses API web_search; original wording, not copied source text",
+        "research_method": "Gemini API generation and editorial review; CEFR-inspired curriculum references; original wording, no live web browsing",
         "curriculum_references": SOURCE_REFERENCES,
         "modules": modules,
     }
@@ -353,7 +369,7 @@ def main() -> int:
     if changed != 1:
         raise RuntimeError("Could not update the weekly-content.js cache-busting version in index.html.")
     index_path.write_text(index_html, encoding="utf-8")
-    print(f"Approved and prepared {len(items)} new prompts for {week_id}.")
+    print(f"Approved and prepared {len(items)} new prompts for {week_id} using {MODEL}.")
     print(f"Archive now contains {len(archive['weeks'])} weekly batches ({sum(w.get('count', 0) for w in archive['weeks'])} prompts).")
     return 0
 
