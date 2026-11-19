@@ -1,1 +1,57 @@
+name: Weekly English Learning Content
 
+on:
+  schedule:
+    # Every Monday at 02:17 UTC (09:17 Vietnam / 10:17 Singapore).
+    - cron: "17 2 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-learning-content
+  cancel-in-progress: false
+
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-6.2-astra' }}
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate required secret
+        shell: bash
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::Missing OPENAI_API_KEY. Add it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Generate, research and quality-check 50 new prompts
+        run: python scripts/generate_weekly_content.py
+
+      - name: Commit and publish approved learning content
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add weekly-content.js content/weekly-lessons.json index.html
+          if git diff --cached --quiet; then
+            echo "No new weekly content to publish."
+            exit 0
+          fi
+          git commit -m "chore: publish weekly English learning content"
+          git push
