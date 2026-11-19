@@ -41,3 +41,15 @@ No third-party lesson text or audio is copied into this app. Audio is generated 
 
 ## Storage and audio notes
 Progress is local to the current browser profile and does not sync between devices. Browser voice availability and sound quality depend on the device and installed English voices. This package does not include professionally recorded MP3 audio.
+
+
+## Version 6 – Smart Dictionary & refreshed design
+
+- New balanced color palette: deep teal, sea-glass green, soft ivory and warm apricot accents (not an all-purple theme).
+- Click any word in the checked answer or word-by-word result to open Smart Dictionary.
+- Dictionary shows Vietnamese meaning (built-in entries first), part of speech, IPA, English definition, example and example translation where available.
+- Online lookup fallback: Free Dictionary API for English definitions/phonetics and MyMemory for Vietnamese translation. Internet access is needed for words not included in the built-in dictionary.
+- Play a word's pronunciation; save it to My Vocabulary; search, remove and export saved words as CSV.
+- Saved vocabulary is stored in browser LocalStorage.
+
+To update GitHub Pages, upload and overwrite all five files in the repository root: `index.html`, `style.css`, `app.js`, `course-data.js`, and `README.md`.
