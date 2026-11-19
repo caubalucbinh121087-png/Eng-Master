@@ -20,7 +20,7 @@ BASE_DATA = ROOT / "course-data.js"
 ARCHIVE = ROOT / "content" / "weekly-lessons.json"
 OUTPUT_JS = ROOT / "weekly-content.js"
 API_URL_TEMPLATE = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
 API_KEY = os.getenv("GEMINI_API_KEY", "").strip()
 SOURCE_REFERENCES = [
     {"name": "British Council LearnEnglish", "url": "https://learnenglish.britishcouncil.org/"},
