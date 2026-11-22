@@ -1,27 +1,63 @@
-<!DOCTYPE html>
-<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#2563eb"><title>English Master – Full Course</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css?v=4"></head>
-<body><div class="app-shell">
-<aside class="sidebar" id="sidebar"><div class="brand"><div class="brand-mark">E</div><div><strong>English Master</strong><small>LEARN · LISTEN · SPEAK</small></div></div>
-<nav class="nav"><button class="nav-item active" data-view="home"><span>⌂</span> Trang chủ</button><button class="nav-item" data-view="grammar"><span>▤</span> 12 thì tiếng Anh</button><button class="nav-item" data-view="conversation"><span>♫</span> Giao tiếp hàng ngày</button><button class="nav-item" data-view="work"><span>▣</span> English for Work</button><button class="nav-item" data-view="progress"><span>▥</span> Tiến độ học tập</button></nav>
-<div class="sidebar-course"><div class="tiny-label">KHÓA HỌC CỦA BẠN</div><div id="sidebarCourses"></div></div>
-<div class="sidebar-bottom"><div class="daily-card"><span class="tiny-label">MỤC TIÊU HÔM NAY</span><strong>15 phút</strong><p>Học một chút mỗi ngày để tiến bộ.</p></div><div class="profile"><div class="avatar">👨‍🎓</div><div><strong>English Learner</strong><small>Personal learning</small></div></div></div></aside>
-<main class="main"><header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn">☰</button><div><span class="eyebrow">MY LEARNING SPACE</span><h1 id="pageTitle">Xin chào! Sẵn sàng học hôm nay?</h1></div><div class="top-actions"><span class="streak">🔥 <b id="streak">1</b> day streak</span><div class="top-avatar">👨‍🎓</div></div></header>
-<section id="homeView">
-<div class="welcome-grid"><div class="welcome-card"><div class="welcome-copy"><span class="eyebrow light">YOUR ENGLISH JOURNEY</span><h2>Small steps.<br><em>Big progress.</em></h2><p>Học ngữ pháp, luyện nghe và giao tiếp tiếng Anh thực tế mỗi ngày.</p><button class="white-link" id="continueBtn">Tiếp tục học <span>→</span></button></div><div class="hero-art"><div class="sound-orbit"></div><div class="sound-orbit orbit-two"></div><div class="headphone">♫</div><div class="hero-spark">✦</div></div></div>
-<div class="summary-card"><span class="summary-icon">🏆</span><span class="tiny-label">ĐIỂM TÍCH LŨY</span><strong id="totalPoints">0</strong><small>Keep going — you're doing great!</small><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
-<div class="stats-grid"><div class="stat-card"><span class="stat-icon blue">✓</span><div><small>Đã hoàn thành</small><strong id="completedCount">0</strong></div></div><div class="stat-card"><span class="stat-icon green">◎</span><div><small>Độ chính xác</small><strong id="accuracy">—</strong></div></div><div class="stat-card"><span class="stat-icon orange">♫</span><div><small>Lượt nghe</small><strong id="listenCount">0</strong></div></div></div>
-<div class="section-title"><div><span class="eyebrow">YOUR LEARNING PATH</span><h2>Lộ trình học tập</h2><p>2.000 câu thực hành · 12 thì tiếng Anh · Giao tiếp hàng ngày · English for Work.</p></div></div>
-<div class="course-grid" id="homeCourses"></div>
-</section>
-<section id="catalogView" class="hidden"><div class="section-title"><div><span class="eyebrow">COURSE LIBRARY</span><h2 id="catalogTitle">Khóa học</h2><p id="catalogSubtitle">Chọn bài học để bắt đầu.</p></div></div><div class="catalog-tools"><input id="courseSearch" type="search" placeholder="Tìm chủ đề học..."/><select id="levelFilter"><option value="all">Tất cả cấp độ</option><option value="A1">A1 · Beginner</option><option value="A2">A2 · Elementary</option><option value="B1">B1 · Intermediate</option></select></div><div class="catalog-grid" id="catalogGrid"></div></section>
-<section id="lessonView" class="hidden"><div class="lesson-layout"><div class="lesson-panel"><div class="section-heading"><div><span class="eyebrow" id="lessonEyebrow">GRAMMAR COURSE · A2</span><h2 id="lessonTitle">Past Simple – Thì quá khứ đơn</h2><p id="lessonSubtitle">Listening & Dictation · Bài luyện nghe và gõ lại</p></div><span class="level-pill" id="lessonLevel">BEGINNER</span></div>
-<div class="lesson-progress"><div class="progress-meta"><span id="questionCounter">Question 1 of 5</span><span id="progressPercent">0% completed</span></div><div class="progress-track"><div id="progressFill"></div></div></div>
-<div class="exercise-card"><div class="exercise-top"><div><span class="eyebrow">LISTENING PRACTICE</span><h3>Listen and type what you hear</h3><p>Đọc nghĩa tiếng Việt, nghe câu tiếng Anh và gõ lại.</p></div><div class="headphone-icon">🎧</div></div>
-<div class="translation-prompt"><div class="translation-heading"><span>🇻🇳</span><div><strong>Dịch sang tiếng Anh</strong><small>Đọc nghĩa tiếng Việt, nghe audio và gõ lại câu tiếng Anh</small></div></div><p id="translationText" aria-live="polite"></p></div>
-<div class="audio-box"><div class="audio-main"><button class="play-btn" id="playBtn">▶</button><div class="audio-info"><strong id="audioTitle">Sentence 01</strong><span id="audioStatus">English voice · Ready to play</span></div><div class="audio-wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="audio-controls"><div class="speed-group"><span>Speed</span><button class="speed active" data-speed="1">1.0x</button><button class="speed" data-speed="0.8">0.8x</button><button class="speed" data-speed="0.65">0.65x</button></div><button class="replay-btn" id="replayBtn">↻ Nghe lại</button></div></div>
-<div class="voice-row"><label for="voiceSelect">Giọng đọc</label><select id="voiceSelect"><option value="">Tự động chọn English voice</option></select><button class="test-audio" id="testAudio">Test audio</button></div>
-<div class="answer-area"><div class="answer-label"><label for="answerInput">YOUR ANSWER <span>Gõ câu tiếng Anh bạn nghe được</span></label><span class="keyboard-hint">Ctrl + Enter để kiểm tra</span></div><textarea id="answerInput" rows="3" placeholder="Type the sentence you hear here..." spellcheck="false"></textarea><div class="answer-tools"><button class="hint-btn" id="hintBtn">💡 Gợi ý</button><span id="charCount">0 characters</span></div><div class="hint-box hidden" id="hintBox"></div></div>
-<div class="feedback hidden" id="feedback" aria-live="polite"></div><div class="action-row"><button class="primary-btn" id="checkBtn">Kiểm tra đáp án <span>→</span></button><button class="secondary-btn" id="showAnswerBtn">Xem đáp án</button></div><div class="after-check hidden" id="afterCheck"><button class="secondary-btn" id="retryBtn">↻ Làm lại câu này</button><button class="primary-btn" id="nextBtn">Câu tiếp theo <span>→</span></button></div></div>
-<div class="side-stack"><div class="side-card"><div class="side-card-title"><h3>Question list</h3><span id="sideDone">0/5</span></div><div class="question-list" id="questionList"></div><div class="legend"><span><i class="legend-dot done"></i> Đã làm</span><span><i class="legend-dot current"></i> Hiện tại</span><span><i class="legend-dot"></i> Chưa làm</span></div></div><div class="side-card grammar-card"><span class="grammar-icon">📘</span><h3>Grammar reminder</h3><p id="grammarNote">Ôn lại cấu trúc ngữ pháp của bài học.</p><div class="formula"><small>KEY STRUCTURE</small><strong id="grammarFormula">S + V2 / V-ed</strong></div><ul id="grammarExamples"></ul></div><div class="side-card progress-card"><h3>Your progress</h3><div class="circle-progress" id="circleProgress"><div><strong id="circleValue">0%</strong><small>completed</small></div></div><p id="progressMessage">Bắt đầu câu đầu tiên nhé!</p></div></div></div></section>
-<section id="progressView" class="hidden"><div class="section-title"><div><span class="eyebrow">LEARNING ANALYTICS</span><h2>Tiến độ học tập</h2><p>Kết quả được lưu trên trình duyệt hiện tại.</p></div></div><div class="stats-grid"><div class="stat-card"><span class="stat-icon blue">✓</span><div><small>Câu đã hoàn thành</small><strong id="progressCompleted">0</strong></div></div><div class="stat-card"><span class="stat-icon green">◎</span><div><small>Độ chính xác trung bình</small><strong id="progressAccuracy">—</strong></div></div><div class="stat-card"><span class="stat-icon orange">★</span><div><small>Tổng điểm</small><strong id="progressPoints">0</strong></div></div></div><div class="side-card progress-table-card"><h3>Kết quả theo khóa học</h3><div id="courseProgressRows"></div></div></section>
-<footer>© 2026 English Master · Built for daily learning <span>Made with 💙</span></footer></main></div><div class="toast" id="toast"></div><script src="course-data.js?v=5"></script><script src="weekly-content.js?v=2026-W47"></script><script src="app.js?v=6"></script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0f9388">
+  <title>English Master — Learn · Listen · Speak</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=7.0">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><div class="brand-mark">E</div><div><b>English Master</b><small>LEARN · LISTEN · SPEAK</small></div></div>
+    <nav>
+      <button class="nav active" data-view="home">⌂ <span>Trang chủ</span></button>
+      <button class="nav" data-view="grammar">▤ <span>12 thì tiếng Anh</span></button>
+      <button class="nav" data-view="daily">♫ <span>Giao tiếp hàng ngày</span></button>
+      <button class="nav" data-view="work">▣ <span>English for Work</span></button>
+      <button class="nav" data-view="vocab">✎ <span>Sổ từ vựng</span></button>
+      <button class="nav" data-view="progress">▥ <span>Tiến độ học tập</span></button>
+    </nav>
+    <div class="side-label">KHÓA HỌC CỦA BẠN</div><div id="sideCourses" class="side-courses"></div>
+    <div class="sidebar-bottom"><div class="goal"><small>MỤC TIÊU HÔM NAY</small><b>15 phút</b><p>Học một chút mỗi ngày để tiến bộ.</p></div><div class="profile"><span>👨‍🎓</span><div><b>English Learner</b><small>Personal learning</small></div></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><button class="mobile-menu" id="menuBtn">☰</button><div><small class="eyebrow">MY LEARNING SPACE</small><h1 id="pageTitle">Xin chào! Sẵn sàng học hôm nay?</h1></div><div class="streak">🔥 <b id="streak">1</b> day streak</div></header>
+    <section id="homeView">
+      <div class="hero-grid"><div class="hero"><small>YOUR ENGLISH JOURNEY</small><h2>Small steps.<br><em>Big progress.</em></h2><p>Học ngữ pháp, luyện nghe và giao tiếp tiếng Anh thực tế mỗi ngày.</p><button class="light-btn" id="continueBtn">Tiếp tục học →</button><div class="hero-art">🎧</div></div><div class="summary"><small>ĐIỂM TÍCH LŨY</small><strong id="points">0</strong><span>Keep going — you're doing great!</span><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
+      <div class="stats"><div><small>Đã hoàn thành</small><b id="doneCount">0</b></div><div><small>Độ chính xác</small><b id="accuracy">—</b></div><div><small>Lượt nghe</small><b id="listenCount">0</b></div></div>
+      <div class="section-head"><div><small>YOUR LEARNING PATH</small><h2>Lộ trình học tập</h2><p id="courseSummary">Đang tải dữ liệu khóa học…</p></div></div>
+      <div class="cards" id="homeCards"></div>
+      <div class="section-head"><div><small>NEW THIS WEEK</small><h2>Bài học mới</h2><p>Nội dung bổ sung từ hệ thống học tập hàng tuần.</p></div></div><div class="cards" id="weeklyCards"></div>
+    </section>
+    <section id="catalogView" class="hidden">
+      <div class="section-head"><div><small>COURSE LIBRARY</small><h2 id="catalogTitle">Khóa học</h2><p id="catalogDesc">Chọn một chủ đề để bắt đầu.</p></div></div>
+      <div class="filters"><input id="searchInput" placeholder="Tìm chủ đề học..." type="search"><select id="levelSelect"><option value="all">Tất cả cấp độ</option><option>A1</option><option>A2</option><option>B1</option></select></div>
+      <div class="cards" id="catalogCards"></div>
+    </section>
+    <section id="lessonView" class="hidden">
+      <div class="lesson-layout"><article class="lesson-card">
+        <div class="lesson-heading"><div><small id="lessonEyebrow">LISTENING & DICTATION</small><h2 id="lessonTitle">Lesson</h2><p id="lessonSub">Nghe câu tiếng Anh và gõ lại.</p></div><span class="level" id="lessonLevel">A1</span></div>
+        <div class="progress-meta"><span id="qCounter">Question 1</span><span id="qPercent">0% completed</span></div><div class="progress"><i id="qBar"></i></div>
+        <div class="exercise"><div class="exercise-top"><div><small>LISTENING PRACTICE</small><h3>Listen and type what you hear</h3><p>Đọc nghĩa tiếng Việt, nghe câu tiếng Anh và gõ lại.</p></div><span class="headphones">🎧</span></div>
+          <div class="translation"><div><b>VN</b><span><strong>Dịch sang tiếng Anh</strong><small>Đọc nghĩa tiếng Việt, nghe audio và gõ lại câu tiếng Anh</small></span></div><p id="translation">Bản dịch tiếng Việt</p></div>
+          <div class="audio"><div class="audio-row"><button id="playBtn" class="play">▶</button><div><b id="audioTitle">Sentence 01</b><small id="audioStatus">Audio sẵn sàng</small></div><div class="wave">▂▅▃▆▄▇▃▅▂</div></div><div class="audio-bottom"><div>Speed <button class="speed active" data-speed="1">1.0x</button><button class="speed" data-speed=".8">0.8x</button><button class="speed" data-speed=".65">0.65x</button></div><button id="replayBtn" class="text-btn">↻ Nghe lại</button></div></div>
+          <div class="voice"><label for="voiceSelect">Giọng đọc</label><select id="voiceSelect"><option value="">Tự động chọn English voice</option></select><button id="testAudio" class="text-btn">Test audio</button></div>
+          <label class="answer-label" for="answerInput">YOUR ANSWER <small>Gõ câu tiếng Anh bạn nghe được</small></label><textarea id="answerInput" rows="3" placeholder="Type the sentence you hear here..." spellcheck="false"></textarea>
+          <div class="answer-actions"><button id="hintBtn" class="hint">💡 Gợi ý</button><span id="charCount">0 characters</span></div><div id="hintBox" class="hint-box hidden"></div>
+          <div id="feedback" class="feedback hidden"></div>
+          <div class="buttons"><button id="checkBtn" class="primary">Kiểm tra đáp án →</button><button id="showBtn" class="secondary">Xem đáp án</button></div>
+          <div id="afterCheck" class="buttons hidden"><button id="retryBtn" class="secondary">↻ Làm lại câu này</button><button id="nextBtn" class="primary">Câu tiếp theo →</button></div>
+        </div>
+      </article><aside class="lesson-side"><div class="side-box"><div class="side-title">Question list <span id="sideCount"></span></div><div id="questionGrid" class="question-grid"></div></div><div class="side-box"><b>Grammar reminder</b><p id="grammarNote">Ôn lại cấu trúc ngữ pháp của bài học.</p><div class="formula"><small>KEY STRUCTURE</small><b id="formula">Useful phrases</b></div><ul id="examples"></ul></div><div class="side-box progress-box"><b>Your progress</b><strong id="lessonProgress">0%</strong><small>completed</small></div></aside></div>
+    </section>
+    <section id="vocabView" class="hidden"><div class="section-head"><div><small>MY VOCABULARY</small><h2>Sổ từ vựng</h2><p>Các từ bạn đã lưu trong quá trình học.</p></div></div><div class="filters"><input id="vocabSearch" type="search" placeholder="Tìm từ vựng..."><button id="exportVocab" class="secondary">Xuất CSV</button></div><div id="vocabList" class="vocab-list"></div></section>
+    <section id="progressView" class="hidden"><div class="section-head"><div><small>LEARNING ANALYTICS</small><h2>Tiến độ học tập</h2><p>Kết quả được lưu trên trình duyệt hiện tại.</p></div></div><div class="stats"><div><small>Câu đã hoàn thành</small><b id="pDone">0</b></div><div><small>Độ chính xác</small><b id="pAccuracy">—</b></div><div><small>Tổng điểm</small><b id="pPoints">0</b></div></div><div id="progressCourses" class="progress-list"></div></section>
+    <footer>© 2026 English Master · Built for daily learning <span>Made with 💚</span></footer>
+  </main>
+</div><div id="toast" class="toast"></div>
+<script src="course-data.js?v=7.0"></script><script src="weekly-content.js?v=7.0"></script><script src="app.js?v=7.0"></script>
+</body></html>
