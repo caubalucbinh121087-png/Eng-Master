@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7.0">
+  <link rel="stylesheet" href="style.css?v=8.0">
 </head>
 <body>
 <div class="shell">
@@ -20,6 +20,11 @@
       <button class="nav" data-view="work">▣ <span>English for Work</span></button>
       <button class="nav" data-view="vocab">✎ <span>Sổ từ vựng</span></button>
       <button class="nav" data-view="progress">▥ <span>Tiến độ học tập</span></button>
+      <button class="nav" data-view="speaking">🎙 <span>Speaking Coach</span></button>
+      <button class="nav" data-view="readingwriting">✍ <span>Reading & Writing</span></button>
+      <button class="nav" data-view="review">↻ <span>Ôn tập thông minh</span></button>
+      <button class="nav" data-view="analytics">▦ <span>Skill Analytics</span></button>
+      <button class="nav" data-view="coach">✦ <span>AI Learning Coach</span></button>
     </nav>
     <div class="side-label">KHÓA HỌC CỦA BẠN</div><div id="sideCourses" class="side-courses"></div>
     <div class="sidebar-bottom"><div class="goal"><small>MỤC TIÊU HÔM NAY</small><b>15 phút</b><p>Học một chút mỗi ngày để tiến bộ.</p></div><div class="profile"><span>👨‍🎓</span><div><b>English Learner</b><small>Personal learning</small></div></div></div>
@@ -56,8 +61,14 @@
     </section>
     <section id="vocabView" class="hidden"><div class="section-head"><div><small>MY VOCABULARY</small><h2>Sổ từ vựng</h2><p>Các từ bạn đã lưu trong quá trình học.</p></div></div><div class="filters"><input id="vocabSearch" type="search" placeholder="Tìm từ vựng..."><button id="exportVocab" class="secondary">Xuất CSV</button></div><div id="vocabList" class="vocab-list"></div></section>
     <section id="progressView" class="hidden"><div class="section-head"><div><small>LEARNING ANALYTICS</small><h2>Tiến độ học tập</h2><p>Kết quả được lưu trên trình duyệt hiện tại.</p></div></div><div class="stats"><div><small>Câu đã hoàn thành</small><b id="pDone">0</b></div><div><small>Độ chính xác</small><b id="pAccuracy">—</b></div><div><small>Tổng điểm</small><b id="pPoints">0</b></div></div><div id="progressCourses" class="progress-list"></div></section>
+
+    <section id="speakingView" class="hidden emx-view"></section>
+    <section id="readingwritingView" class="hidden emx-view"></section>
+    <section id="reviewView" class="hidden emx-view"></section>
+    <section id="analyticsView" class="hidden emx-view"></section>
+    <section id="coachView" class="hidden emx-view"></section>
     <footer>© 2026 English Master · Built for daily learning <span>Made with 💚</span></footer>
   </main>
 </div><div id="toast" class="toast"></div>
-<script src="course-data.js?v=7.0"></script><script src="weekly-content.js?v=7.0"></script><script src="app.js?v=7.0"></script>
+<script src="course-data.js?v=7.0"></script><script src="weekly-content.js?v=7.0"></script><script src="app.js?v=7.0"></script><script src="learning-upgrade.js?v=8.0"></script>
 </body></html>
