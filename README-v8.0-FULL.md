@@ -72,3 +72,7 @@ New module data is isolated in:
 - Original course and weekly content files
 - `backend/cloudflare-worker/` (optional AI backend)
 - Existing weekly GitHub Actions workflow and generator
+
+
+## AI Coach backend migration
+A Google Cloud Run backend is included in `backend/cloud-run`. Follow `backend/cloud-run/README-CLOUD-RUN.md`. The GitHub Pages frontend still uses the base backend URL and appends `/coach` automatically. Keep Gemini API credentials in Google Secret Manager only.
